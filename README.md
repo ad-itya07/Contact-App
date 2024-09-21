@@ -1,4 +1,3 @@
-
 # Contact App
 
 A full-stack Contact Management application built with React, Vite, Node.js, Express, PostgreSQL, and Prisma. This app allows users to manage contacts with pagination, filtering, and sorting functionalities.
