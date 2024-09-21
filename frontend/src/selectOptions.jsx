@@ -247,6 +247,8 @@ export const countryOptions = [
   ];
   
 export const sortOptions = [
-    { value: "asc", label: "Year ↓", sortBy: "year" },
-    { value: "desc", label: "Year ↑", sortBy: "year" },
+    { value: "year-asc", label: "Year ↓", sortBy: "year", order: "asc" },
+    { value: "year-desc", label: "Year ↑", sortBy: "year", order: "desc" },
+    { value: "fName-asc", label: "Name ↓", sortBy: "firstName", order: "asc" },
+    { value: "fName-desc", label: "Name ↑", sortBy: "firstName", order: "desc" },
   ];
