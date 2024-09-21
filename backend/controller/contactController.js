@@ -4,9 +4,12 @@ const prisma = new PrismaClient();
 
 class ContactController {
   async getContacts(req, res) {
-    const { page = 1, limit = 10 } = req.query;
-    const skip = (page - 1) * limit;
+    let { page, limit } = req.query;
     
+    page = page ? parseInt(page) : 1;
+    limit = limit ? parseInt(limit) : 10;
+
+    const skip = (page - 1) * limit;
     const contacts = await prisma.contact.findMany({
       skip,
       take: parseInt(limit),
