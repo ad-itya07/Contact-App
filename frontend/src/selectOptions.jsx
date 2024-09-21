@@ -249,8 +249,10 @@ export const countryOptions = [
 export const sortOptions = [
     { value: "year-asc", label: "Year ↓", sortBy: "year", order: "asc" },
     { value: "year-desc", label: "Year ↑", sortBy: "year", order: "desc" },
-    { value: "fName-asc", label: "Name ↓", sortBy: "firstName", order: "asc" },
-    { value: "fName-desc", label: "Name ↑", sortBy: "firstName", order: "desc" },
+    { value: "fName-asc", label: "First Name ↓", sortBy: "firstName", order: "asc" },
+    { value: "fName-desc", label: "First Name ↑", sortBy: "firstName", order: "desc" },
+    { value: "lName-asc", label: "Last Name ↓", sortBy: "lastName", order: "asc" },
+    { value: "lName-desc", label: "Last Name ↑", sortBy: "lastName", order: "desc" },
   ];
 
 export const searchOptions = [ 

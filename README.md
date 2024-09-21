@@ -4,7 +4,9 @@ A full-stack Contact Management application built with React, Vite, Node.js, Exp
 
 ## Features
 
-- **Filtering**: Filter the large number of based on the countries name.
+- **Searching**: Search through the large number of conatcs based on various fields.
+- **Sorting**: Sort the large number of contacts based on year added, first name & last name.
+- **Filtering**: Filter the large number of contacts based on the countries name.
 - **Pagination**: Navigate through a large number of contacts easily.
 - **Responsive Design**: Works well on both desktop and mobile devices.
 
