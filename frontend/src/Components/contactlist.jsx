@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Table from "./table";
 import "../ContactList.css";
+import Select from "react-select";
+import { countryOptions } from "../countryList";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -9,17 +11,17 @@ function ContactList() {
   const [contacts, setContacts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 10;
+  const [countryCode, setCountryCode] = useState(null);
 
   useEffect(() => {
     console.log(page);
     fetchContacts();
-  }, [page]);
+  }, [page, countryCode]);
 
   const fetchContacts = async () => {
     try {
       const response = await axios.get(apiUrl, {
-        params: { page: page, limit: 10 },
+        params: { page: page, limit: 10, countryCode },
       });
 
       setContacts(response.data.contacts);
@@ -41,6 +43,8 @@ function ContactList() {
   //     return pages;
   //   }
 
+  const pageSize = 10;
+
   function getPageNumbers() {
     const totalBlocks = Math.min(pageSize, totalPages);
     const startPage = Math.max(1, page - Math.floor(totalBlocks / 2));
@@ -60,11 +64,21 @@ function ContactList() {
 
   return (
     <div className="container">
-        <h2>Contact List : P{page}</h2>
-        <Table contacts={contacts} />
+      <h2>
+        Contact List : P{page}
+        <Select
+          className="select"
+          options={countryOptions}
+          value={countryCode}
+          onChange={setCountryCode}
+          placeholder="Select Country Code"
+          isClearable
+          isSearchable
+        />
+      </h2>
 
-        
-      {/* Pagination Controls */}
+      <Table contacts={contacts} />
+
       <div className="pagination">
         {/* METHOD 2 BELOW */}
         {/* {renderPageNumbers()} */}
