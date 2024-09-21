@@ -8,9 +8,11 @@ function Table(props) {
         <tr>
           <th>First Name</th>
           <th>Last Name</th>
+          <th>Country Code</th>
           <th>Email</th>
           <th>Phone</th>
           <th>Job Title</th>
+          <th>Year Added</th>
           {/* Add more columns if needed */}
         </tr>
       </thead>
@@ -20,9 +22,11 @@ function Table(props) {
             key={contact.id}
             firstName={contact.firstName}
             lastName={contact.lastName}
+            countryCode={contact.countryCode}
             email={contact.email}
             phone={contact.phone}
             jobTitle={contact.jobTitle}
+            year={contact.year}
           />
         ))}
       </tbody>
