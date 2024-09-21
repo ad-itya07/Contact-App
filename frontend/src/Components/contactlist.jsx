@@ -28,6 +28,18 @@ function ContactList() {
     }
   };
 
+  function renderPageNumbers() {
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(
+        <button key={i} onClick={() => setPage(i)}>
+          {i}
+        </button>
+      );
+    }
+    return pages;
+  }
+
   return (
     <div className="container">
       <h2>Contact List</h2>
@@ -58,22 +70,22 @@ function ContactList() {
 
       {/* Pagination Controls */}
       <div className="pagination">
-        <button
-          onClick={() => setPage((prevValue) => Math.max(prevValue - 1, 1))}
+        {renderPageNumbers()}
+        {/* <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}
         >
           Previous
         </button>
         <span>
-          {" "}
-          Page {page} of {totalPages}{" "}
+          Page {page} of {totalPages}
         </span>
         <button
-          onClick={() => setPage((prevValue) => Math.min(prevValue + 1, totalPages))}
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={page === totalPages}
         >
           Next
-        </button>
+        </button> */}
       </div>
     </div>
   );
