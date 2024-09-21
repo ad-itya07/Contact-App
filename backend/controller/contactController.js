@@ -4,10 +4,16 @@ const prisma = new PrismaClient();
 
 class ContactController {
   async getContacts(req, res) {
-    let { page, limit, countryCode } = req.query;
+    let { page, limit, countryCode, sortOrder } = req.query;
     
     page = page ? parseInt(page) : 1;
     limit = limit ? parseInt(limit) : 10;
+
+    let orderBy = {};
+    if (sortOrder) {
+      let order = sortOrder.sortBy;
+      orderBy[order] = sortOrder.value;      
+    }
 
     const filters = {};
     if (countryCode) {
@@ -19,6 +25,7 @@ class ContactController {
       where: filters,
       skip,
       take: parseInt(limit),
+      orderBy,
     });
 
     const totalContacts = await prisma.contact.count({
