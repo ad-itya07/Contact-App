@@ -12,7 +12,7 @@ class ContactController {
     let orderBy = {};
     if (sortOrder) {
       let order = sortOrder.sortBy;
-      orderBy[order] = sortOrder.value;      
+      orderBy[order] = sortOrder.order;      
     }
 
     const filters = {};
