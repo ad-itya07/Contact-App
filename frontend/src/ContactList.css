@@ -11,6 +11,7 @@ h2 {
   text-align: center;
   color: #333;
   margin-bottom: 20px;
+  display: flex;
 }
 
 table {
@@ -70,4 +71,14 @@ table tr:hover {
 
 .pagination button:hover:not(:disabled) {
   background-color: #45a049;
+}
+
+.select {
+  height: 10px;
+  width: 300px;
+  font-size: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
