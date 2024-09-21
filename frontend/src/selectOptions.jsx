@@ -252,3 +252,10 @@ export const sortOptions = [
     { value: "fName-asc", label: "Name ↓", sortBy: "firstName", order: "asc" },
     { value: "fName-desc", label: "Name ↑", sortBy: "firstName", order: "desc" },
   ];
+
+export const searchOptions = [ 
+    { value: "firstName", label: "First Name" },
+    { value: "lastName", label: "Last Name" },
+    { value: "email", label: "Email" },
+    { value: "phone", label: "Phone" },
+  ];

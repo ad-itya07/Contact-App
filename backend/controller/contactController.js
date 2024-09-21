@@ -4,10 +4,11 @@ const prisma = new PrismaClient();
 
 class ContactController {
   async getContacts(req, res) {
-    let { page, limit, countryCode, sortOrder } = req.query;
+    let { page, limit, countryCode, sortOrder, searchIn, searchValue } = req.query;
     
     page = page ? parseInt(page) : 1;
     limit = limit ? parseInt(limit) : 10;
+    const skip = (page - 1) * limit;
 
     let orderBy = {};
     if (sortOrder) {
@@ -15,14 +16,23 @@ class ContactController {
       orderBy[order] = sortOrder.order;      
     }
 
-    const filters = {};
+    let search = {};
+    if (searchIn && searchValue) {
+      search[searchIn.value] ={
+        contains: searchValue,
+        mode: 'insensitive',
+      };
+    }
+
+    let filters = {};
     if (countryCode) {
       filters.countryCode = countryCode.value;
     }
 
-    const skip = (page - 1) * limit;
     const contacts = await prisma.contact.findMany({
-      where: filters,
+      where: {
+        AND: [filters,search]
+      },
       skip,
       take: parseInt(limit),
       orderBy,

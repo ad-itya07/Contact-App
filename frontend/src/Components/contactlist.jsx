@@ -3,7 +3,7 @@ import axios from "axios";
 import Table from "./table";
 import "../ContactList.css";
 import Select from "react-select";
-import { countryOptions , sortOptions } from "../selectOptions";
+import { countryOptions, sortOptions, searchOptions } from "../selectOptions";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -12,17 +12,35 @@ function ContactList() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [countryCode, setCountryCode] = useState(null);
-  const [sortOrder , setSortOrder] = useState(null);
+  const [sortOrder, setSortOrder] = useState(null);
+  const [searchIn, setSearchIn] = useState(null);
+  const [searchValue, setSearchValue] = useState(null);
+  const [toSearch, setToSearch] = useState(false);
 
   useEffect(() => {
     console.log(page);
     fetchContacts();
   }, [page, countryCode, sortOrder]);
 
+  useEffect(() => {
+    if (toSearch) {
+      fetchContacts();
+      setToSearch(false);
+    }
+  }, [toSearch]);
+  
+
   const fetchContacts = async () => {
     try {
       const response = await axios.get(apiUrl, {
-        params: { page: page, limit: 10, countryCode, sortOrder },
+        params: {
+          page: page,
+          limit: 10,
+          countryCode,
+          sortOrder,
+          searchIn,
+          searchValue,
+        },
       });
 
       setContacts(response.data.contacts);
@@ -50,6 +68,10 @@ function ContactList() {
     setPage(page);
   };
 
+  const handleSearchValueChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <div className="container">
       <h2>
@@ -59,7 +81,7 @@ function ContactList() {
           options={countryOptions}
           value={countryCode}
           onChange={setCountryCode}
-          placeholder="Select Country Code"
+          placeholder="Select Country Code (Filter)"
           isClearable
           isSearchable
         />
@@ -71,13 +93,34 @@ function ContactList() {
           placeholder="Sort By"
           isClearable
         />
+        <Select
+          className="select-sort"
+          options={searchOptions}
+          value={searchIn}
+          onChange={setSearchIn}
+          placeholder="Search In"
+          isClearable
+        />
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={handleSearchValueChange}
+        />
+        <button
+          className="search-button"
+          onClick={() => {setToSearch(true), setPage(1)}}
+        >
+          Search
+        </button>
       </h2>
 
       <Table contacts={contacts} />
 
       <div className="pagination">
         {/* METHOD 2 BELOW */}
-           {/* function renderPageNumbers() {
+        {/* function renderPageNumbers() {
                 const pages = [];
                 for (let i = 1; i <= totalPages; i++) {
                   pages.push(

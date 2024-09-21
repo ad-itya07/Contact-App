@@ -92,3 +92,28 @@ table tr:hover {
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
+
+.search-input {
+  height: 30px;
+  width: 300px;
+  font-size: 15px;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.search-button {
+  height: 35px;
+  width: 100px;
+  font-size: 15px;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+  background-color: cornflowerblue;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
