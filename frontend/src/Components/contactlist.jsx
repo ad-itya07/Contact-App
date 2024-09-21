@@ -3,7 +3,7 @@ import axios from "axios";
 import Table from "./table";
 import "../ContactList.css";
 import Select from "react-select";
-import { countryOptions } from "../countryList";
+import { countryOptions , sortOptions } from "../selectOptions";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -12,16 +12,17 @@ function ContactList() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [countryCode, setCountryCode] = useState(null);
+  const [sortOrder , setSortOrder] = useState(null);
 
   useEffect(() => {
     console.log(page);
     fetchContacts();
-  }, [page, countryCode]);
+  }, [page, countryCode, sortOrder]);
 
   const fetchContacts = async () => {
     try {
       const response = await axios.get(apiUrl, {
-        params: { page: page, limit: 10, countryCode },
+        params: { page: page, limit: 10, countryCode, sortOrder },
       });
 
       setContacts(response.data.contacts);
@@ -31,20 +32,7 @@ function ContactList() {
     }
   };
 
-  //   function renderPageNumbers() {
-  //     const pages = [];
-  //     for (let i = 1; i <= totalPages; i++) {
-  //       pages.push(
-  //         <button key={i} onClick={() => setPage(i)}>
-  //           {i}
-  //         </button>
-  //       );
-  //     }
-  //     return pages;
-  //   }
-
   const pageSize = 10;
-
   function getPageNumbers() {
     const totalBlocks = Math.min(pageSize, totalPages);
     const startPage = Math.max(1, page - Math.floor(totalBlocks / 2));
@@ -75,12 +63,32 @@ function ContactList() {
           isClearable
           isSearchable
         />
+        <Select
+          className="select-sort"
+          options={sortOptions}
+          value={sortOrder}
+          onChange={setSortOrder}
+          placeholder="Sort By"
+          isClearable
+        />
       </h2>
 
       <Table contacts={contacts} />
 
       <div className="pagination">
         {/* METHOD 2 BELOW */}
+           {/* function renderPageNumbers() {
+                const pages = [];
+                for (let i = 1; i <= totalPages; i++) {
+                  pages.push(
+                    <button key={i} onClick={() => setPage(i)}>
+                      {i}
+                    </button>
+                  );
+                }
+                return pages;
+              } 
+            */}
         {/* {renderPageNumbers()} */}
 
         {/* METHOD 1 BELOW */}
