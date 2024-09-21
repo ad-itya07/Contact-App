@@ -9,6 +9,7 @@ function ContactList() {
   const [contacts, setContacts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 10;
 
   useEffect(() => {
     console.log(page);
@@ -28,21 +29,39 @@ function ContactList() {
     }
   };
 
-  function renderPageNumbers() {
+  //   function renderPageNumbers() {
+  //     const pages = [];
+  //     for (let i = 1; i <= totalPages; i++) {
+  //       pages.push(
+  //         <button key={i} onClick={() => setPage(i)}>
+  //           {i}
+  //         </button>
+  //       );
+  //     }
+  //     return pages;
+  //   }
+
+  function getPageNumbers() {
+    const totalBlocks = Math.min(pageSize, totalPages);
+    const startPage = Math.max(1, page - Math.floor(totalBlocks / 2));
+    const endPage = Math.min(totalPages, startPage + totalBlocks - 1);
+
     const pages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(
-        <button key={i} onClick={() => setPage(i)}>
-          {i}
-        </button>
-      );
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
     }
+
     return pages;
   }
 
+  const handlePageChange = (page) => {
+    setPage(page);
+
+  };
+
   return (
     <div className="container">
-      <h2>Contact List</h2>
+      <h2>Contact List : P{page}</h2>
       <table>
         <thead>
           <tr>
@@ -70,7 +89,10 @@ function ContactList() {
 
       {/* Pagination Controls */}
       <div className="pagination">
-        {renderPageNumbers()}
+        {/* METHOD 2 BELOW */}
+        {/* {renderPageNumbers()} */}
+
+        {/* METHOD 1 BELOW */}
         {/* <button
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}
@@ -86,6 +108,30 @@ function ContactList() {
         >
           Next
         </button> */}
+
+        {/* METHOD 3 BELOW */}
+        <button onClick={() => setPage(1)} disabled={page === 1}>{`<<`}</button>
+
+        <button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+        >{`<`}</button>
+
+        {getPageNumbers().map((pageNumber) => (
+          <button key={pageNumber} onClick={() => handlePageChange(pageNumber)} >
+            {pageNumber}
+          </button>
+        ))}
+
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page === totalPages}
+        >{`>`}</button>
+
+        <button
+          onClick={() => setPage(totalPages)}
+          disabled={page === totalPages}
+        >{`>>`}</button>
       </div>
     </div>
   );
